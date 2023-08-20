@@ -1,5 +1,9 @@
 const CustomAPIError= require('../errors/custom-error')
 
+
+const jwt = require('jsonwebtoken')
+const { BadRequestError } = require('../errors')
+
 const login = async (req, res) => {
     const { username, password} = req.body
 
@@ -10,6 +14,13 @@ const login = async (req, res) => {
 
     res.send('Fake Login/Register/Signup Route')
 }
+
+
+const id = new Date().getDate()
+
+const token = jwt.sign({ id, username }, process.env.JWT_SECRET, {
+  expiresIn: '30d',
+})
 
 const dashboard = async (req,res) => {
     const luckyNumber = Math.floor(Math.random() * 100)
